@@ -13,8 +13,11 @@ let color = "black";
 let x1 = undefined;
 let y1 = undefined;
 
+//canvas.width = innerWidth;
+//canvas.height = innerHeight;
+
 colorDetect.addEventListener("change", (e) => {
-  console.log(e.target.value);
+  //console.log(e.target.value);
   color = e.target.value;
 });
 
@@ -54,7 +57,8 @@ canvas.addEventListener("mousedown", (e) => {
   x1 = e.offsetX;
   y1 = e.offsetY;
 
-  console.log(x1, y1);
+  //console.log("yyy");
+  //console.log(x1, y1);
 });
 
 canvas.addEventListener("mouseup", () => {
@@ -69,13 +73,55 @@ canvas.addEventListener("mousemove", (e) => {
     let x = e.offsetX;
     let y = e.offsetY;
 
-    drawCircle(x, y);
     drawLine(x1, y1, x, y);
+    drawCircle(x, y);
 
     x1 = x;
     y1 = y;
   }
 });
+
+/*=====================================*/
+
+canvas.addEventListener("touchstart", (e) => {
+  //console.log("start");
+  detectClick = true;
+
+  x1 = e.touches[0].pageX;
+  y1 = e.touches[0].pageY;
+
+  //console.log(x1, y1);
+});
+
+canvas.addEventListener("touchend", () => {
+  //console.log("end");
+  detectClick = false;
+
+  x1 = undefined;
+  y1 = undefined;
+});
+
+canvas.addEventListener("touchmove", (e) => {
+  //console.log("move");
+  if (detectClick) {
+    // let x = e.offsetX;
+    // let y = e.offsetY;
+
+    let k = e.touches[0].pageX;
+    let l = e.touches[0].pageY;
+
+    drawLine(x1, y1, k, l);
+    drawCircle(k, l);
+
+    x1 = k;
+    y1 = l;
+
+    //console.log(e.touches[0].pageX);
+    //console.log(k, l, "jj");
+  }
+});
+
+/*=====================================*/
 
 function drawCircle(x, y) {
   ctx.beginPath();
@@ -92,5 +138,5 @@ function drawLine(x1, y1, x, y) {
   ctx.lineWidth = size * 2;
   ctx.strokeStyle = color;
   ctx.stroke();
-  console.log(size);
+  //console.log(size);
 }
