@@ -1,0 +1,47 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+    flex-direction: column;
+}
+
+canvas{
+    border: 1px solid #000;
+}
+
+.drawTextBox {
+    display: flex;
+    /* align-items: center; */
+    width: 500px;
+    /* justify-content: stretch; */
+    gap: 10px;
+    padding: 10px 10px;
+    background: rebeccapurple;
+    /* border: 1px solid rebeccapurple; */
+}
+
+.drawTextBox > * {
+    /* display: inline-block; */
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    /* vertical-align: middle; */
+    display: grid;
+    place-items: center;
+    background-color: cornflowerblue;
+    /* gap: 1rem; */
+    color: #fff;
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.clearCanva{
+    margin-left: auto;
+}
