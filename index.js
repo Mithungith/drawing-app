@@ -94,6 +94,8 @@ canvas.addEventListener("touchstart", (e) => {
   x1 = e.touches[0].pageX;
   y1 = e.touches[0].pageY;
 
+  drawCircle(x1, y1);
+
   //console.log(x1, y1);
 });
 
