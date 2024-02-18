@@ -20,7 +20,7 @@ canvas {
 .drawTextBox {
   display: flex;
   /* align-items: center; */
-  width: 500px;
+  width: 800px;
   /* justify-content: stretch; */
   gap: 10px;
   padding: 10px 10px;

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draw on Canvas with Eraser</title>
+<style>
+    canvas {
+        border: 1px solid #000;
+        touch-action: none; /* Disable default touch actions on canvas */
+    }
+</style>
+</head>
+<body>
+<canvas id="myCanvas"></canvas>
+<button id="penBtn">Pen</button>
+<button id="eraserBtn">Eraser</button>
+
+<script>
+    window.onload = function() {
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+        
+        // Set canvas size to window size
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        var isDrawing = false;
+        var lastX = 0;
+        var lastY = 0;
+        var isEraser = false;
+
+        function draw(e) {
+            if (!isDrawing) return;
+            context.beginPath();
+            if (!isEraser) {
+                context.strokeStyle = '#000'; // Pen color
+                context.lineWidth = 2; // Pen line width
+            } else {
+                context.strokeStyle = 'rgba(255, 255, 255, 1)'; // White color for eraser
+                context.lineWidth = 20; // Eraser width
+            }
+            context.lineCap = 'round'; // Set line cap style to round
+            context.moveTo(lastX, lastY);
+            context.lineTo(e.pageX, e.pageY);
+            context.stroke();
+            [lastX, lastY] = [e.pageX, e.pageY];
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            [lastX, lastY] = [e.pageX, e.pageY];
+        });
+
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mouseout', () => isDrawing = false);
+
+        // Touch events for mobile devices
+        canvas.addEventListener('touchstart', (e) => {
+            isDrawing = true;
+            [lastX, lastY] = [e.touches[0].pageX, e.touches[0].pageY];
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            draw(e.touches[0]);
+        });
+
+        canvas.addEventListener('touchend', () => isDrawing = false);
+
+        // Toggle between pen and eraser
+        document.getElementById('penBtn').addEventListener('click', function() {
+            isEraser = false;
+            canvas.style.cursor = 'default'; // Set cursor to default
+        });
+
+        document.getElementById('eraserBtn').addEventListener('click', function() {
+            isEraser = true;
+            canvas.style.cursor = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\' fill=\'%23ff0000\'%3E%3Cpath d=\'M14 1.455 4.45 11H1v3h3l9.546-9.545L14 1.455zm.88-.88-2.122 2.122 1.45 1.449 2.122-2.122a1 1 0 0 0 0-1.415L15.3.576a1 1 0 0 0-1.415 0z\'/%3E%3C/svg%3E") 8 8, auto'; // Set cursor to eraser icon
+            // Clear the canvas when the eraser is selected
+            context.clearRect(0, 0, canvas.width, canvas.height);
+        });
+    };
+</script>
+</body>
+</html>

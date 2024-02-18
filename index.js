@@ -6,18 +6,26 @@ const drawSize = document.querySelector(".drawSize");
 const colorDetect = document.querySelector(".colorInp");
 const clearCanva = document.querySelector(".clearCanva");
 
+canvas.width = 800;
+canvas.height = 600;
+
+var x = window.matchMedia("(max-width: 700px)");
+
+function matches() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight - 70;
+}
+
+x.matches && matches();
+
 let detectClick = false;
 let size = 30;
 let color = "black";
 
-let x1 = undefined;
-let y1 = undefined;
-
-//canvas.width = innerWidth;
-//canvas.height = innerHeight;
+let x1 = 0;
+let y1 = 0;
 
 colorDetect.addEventListener("change", (e) => {
-  //console.log(e.target.value);
   color = e.target.value;
 });
 
@@ -56,9 +64,6 @@ canvas.addEventListener("mousedown", (e) => {
 
   x1 = e.offsetX;
   y1 = e.offsetY;
-
-  //console.log("yyy");
-  //console.log(x1, y1);
 });
 
 canvas.addEventListener("mouseup", () => {
@@ -84,7 +89,6 @@ canvas.addEventListener("mousemove", (e) => {
 /*=====================================*/
 
 canvas.addEventListener("touchstart", (e) => {
-  //console.log("start");
   detectClick = true;
 
   x1 = e.touches[0].pageX;
@@ -94,7 +98,6 @@ canvas.addEventListener("touchstart", (e) => {
 });
 
 canvas.addEventListener("touchend", () => {
-  //console.log("end");
   detectClick = false;
 
   x1 = undefined;
@@ -102,11 +105,7 @@ canvas.addEventListener("touchend", () => {
 });
 
 canvas.addEventListener("touchmove", (e) => {
-  //console.log("move");
   if (detectClick) {
-    // let x = e.offsetX;
-    // let y = e.offsetY;
-
     let k = e.touches[0].pageX;
     let l = e.touches[0].pageY;
 
@@ -115,9 +114,6 @@ canvas.addEventListener("touchmove", (e) => {
 
     x1 = k;
     y1 = l;
-
-    //console.log(e.touches[0].pageX);
-    //console.log(k, l, "jj");
   }
 });
 
@@ -132,11 +128,9 @@ function drawCircle(x, y) {
 
 function drawLine(x1, y1, x, y) {
   ctx.beginPath();
-  //console.log("X1",x,"Y1",y);
   ctx.moveTo(x1, y1);
   ctx.lineTo(x, y);
   ctx.lineWidth = size * 2;
   ctx.strokeStyle = color;
   ctx.stroke();
-  //console.log(size);
 }
