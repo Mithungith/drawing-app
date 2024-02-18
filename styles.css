@@ -24,7 +24,7 @@ canvas {
   /* justify-content: stretch; */
   gap: 10px;
   padding: 10px 10px;
-  background: rebeccapurple;
+  background: #9f70fd;
   /* border: 1px solid rebeccapurple; */
 }
 
@@ -36,11 +36,12 @@ canvas {
   /* vertical-align: middle; */
   display: grid;
   place-items: center;
-  background-color: cornflowerblue;
+  background-color: #7f27ff;
   /* gap: 1rem; */
   color: #fff;
   font-weight: 600;
   font-size: 25px;
+  border-radius: 5px;
 }
 
 .clearCanva {
