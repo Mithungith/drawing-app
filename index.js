@@ -15,10 +15,10 @@ canvas.height = 600;
 let eraseOn = false;
 let penOn = false;
 let screenClick = false;
+let downloadImg = false;
 
 canvas.addEventListener("click", () => {
   screenClick = !screenClick;
-  console.log(screenClick);
 });
 
 eraseBtn.addEventListener("click", () => {
@@ -31,6 +31,7 @@ penBtn.addEventListener("click", () => {
   penOn = true;
   eraseOn = false;
   screenClick = false;
+  downloadImg = true;
 });
 
 var x = window.matchMedia("(max-width: 700px)");
@@ -62,6 +63,7 @@ decrease.addEventListener("click", () => {
 });
 
 clearCanva.addEventListener("click", () => {
+  downloadImg = false;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
 
@@ -168,7 +170,7 @@ function drawLine(x1, y1, x, y) {
 downloadBtnDiv.addEventListener("click", downloadCanvas);
 
 function downloadCanvas() {
-  if (penOn) {
+  if (downloadImg) {
     const link = document.createElement("a");
     link.download = "drawing.png";
     link.href = canvas.toDataURL("image/png");

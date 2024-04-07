@@ -25,26 +25,19 @@ canvas {
 
 .drawTextBox {
   display: flex;
-  /* align-items: center; */
   width: 800px;
-  /* justify-content: stretch; */
   gap: 10px;
   padding: 10px 10px;
   background: #9f70fda1;
-  /* border: 1px solid #7f27ff;
-  border-top: none; */
 }
 
 .drawTextBox > * {
-  /* display: inline-block; */
   width: 50px;
   height: 50px;
   text-align: center;
-  /* vertical-align: middle; */
   display: grid;
   place-items: center;
   background-color: #7f27ff;
-  /* gap: 1rem; */
   color: #fff;
   font-weight: 600;
   font-size: 25px;
@@ -67,6 +60,7 @@ canvas {
   border: none;
   outline: none;
   width: 100%;
+  cursor: pointer;
 }
 .downloadBtnDiv {
   margin-top: 1rem;
