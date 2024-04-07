@@ -12,14 +12,11 @@ const downloadBtnDiv = document.querySelector(".downloadBtnDiv");
 canvas.width = 800;
 canvas.height = 600;
 
-document.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-});
-
 let eraseOn = false;
 let penOn = false;
 let screenClick = false;
 let downloadImg = false;
+let startY = 0;
 
 canvas.addEventListener("click", () => {
   screenClick = !screenClick;
@@ -126,6 +123,8 @@ canvas.addEventListener("touchstart", (e) => {
 
   x1 = e.touches[0].pageX;
   y1 = e.touches[0].pageY;
+
+  startY = e.touches[0].clientY;
 });
 
 canvas.addEventListener("touchend", () => {
@@ -138,6 +137,13 @@ canvas.addEventListener("touchend", () => {
 canvas.addEventListener("touchmove", (e) => {
   let k = e.touches[0].pageX;
   let l = e.touches[0].pageY;
+
+  const currentY = e.touches[0].clientY;
+
+  if (currentY > startY) {
+    e.preventDefault();
+  }
+
   if (!eraseOn && penOn && detectClick) {
     drawLine(x1, y1, k, l);
     drawCircle(k, l);
