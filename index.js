@@ -12,6 +12,10 @@ const downloadBtnDiv = document.querySelector(".downloadBtnDiv");
 canvas.width = 800;
 canvas.height = 600;
 
+document.addEventListener("touchmove", (e) => {
+  e.preventDefault();
+});
+
 let eraseOn = false;
 let penOn = false;
 let screenClick = false;
