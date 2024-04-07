@@ -5,21 +5,45 @@ const decrease = document.querySelector(".decrease");
 const drawSize = document.querySelector(".drawSize");
 const colorDetect = document.querySelector(".colorInp");
 const clearCanva = document.querySelector(".clearCanva");
+const eraseBtn = document.querySelector(".erase");
+const penBtn = document.querySelector(".pen");
+const downloadBtnDiv = document.querySelector(".downloadBtnDiv");
 
 canvas.width = 800;
 canvas.height = 600;
+
+let eraseOn = false;
+let penOn = false;
+let screenClick = false;
+
+canvas.addEventListener("click", () => {
+  screenClick = !screenClick;
+  console.log(screenClick);
+});
+
+eraseBtn.addEventListener("click", () => {
+  eraseOn = true;
+  penOn = false;
+  screenClick = false;
+});
+
+penBtn.addEventListener("click", () => {
+  penOn = true;
+  eraseOn = false;
+  screenClick = false;
+});
 
 var x = window.matchMedia("(max-width: 700px)");
 
 function matches() {
   canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight - 70;
+  canvas.height = window.innerHeight - 60;
 }
 
 x.matches && matches();
 
 let detectClick = false;
-let size = 30;
+let size = 6;
 let color = "black";
 
 let x1 = 0;
@@ -42,19 +66,19 @@ clearCanva.addEventListener("click", () => {
 });
 
 function sizeIncrease() {
-  if (size >= 50) {
-    size = 50;
+  if (size >= 24) {
+    size = 24;
   } else {
-    size += 5;
+    size += 3;
   }
   drawSize.innerText = size;
 }
 
 function sizeDecrease() {
-  if (size <= 5) {
-    size = 5;
+  if (size <= 3) {
+    size = 3;
   } else {
-    size -= 5;
+    size -= 3;
   }
   drawSize.innerText = size;
 }
@@ -74,15 +98,18 @@ canvas.addEventListener("mouseup", () => {
 });
 
 canvas.addEventListener("mousemove", (e) => {
-  if (detectClick) {
-    let x = e.offsetX;
-    let y = e.offsetY;
-
+  let x = e.offsetX;
+  let y = e.offsetY;
+  if (!eraseOn && penOn && detectClick) {
     drawLine(x1, y1, x, y);
     drawCircle(x, y);
 
     x1 = x;
     y1 = y;
+  }
+
+  if (eraseOn && screenClick) {
+    ctx.clearRect(x, y, 25, 25);
   }
 });
 
@@ -93,10 +120,6 @@ canvas.addEventListener("touchstart", (e) => {
 
   x1 = e.touches[0].pageX;
   y1 = e.touches[0].pageY;
-
-  drawCircle(x1, y1);
-
-  //console.log(x1, y1);
 });
 
 canvas.addEventListener("touchend", () => {
@@ -107,15 +130,17 @@ canvas.addEventListener("touchend", () => {
 });
 
 canvas.addEventListener("touchmove", (e) => {
-  if (detectClick) {
-    let k = e.touches[0].pageX;
-    let l = e.touches[0].pageY;
-
+  let k = e.touches[0].pageX;
+  let l = e.touches[0].pageY;
+  if (!eraseOn && penOn && detectClick) {
     drawLine(x1, y1, k, l);
     drawCircle(k, l);
 
     x1 = k;
     y1 = l;
+  }
+  if (eraseOn && detectClick) {
+    ctx.clearRect(k, l, 30, 30);
   }
 });
 
@@ -136,4 +161,17 @@ function drawLine(x1, y1, x, y) {
   ctx.strokeStyle = color;
   ctx.lineCap = "round";
   ctx.stroke();
+}
+
+/*======================Download functionality====================== */
+
+downloadBtnDiv.addEventListener("click", downloadCanvas);
+
+function downloadCanvas() {
+  if (penOn) {
+    const link = document.createElement("a");
+    link.download = "drawing.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  }
 }

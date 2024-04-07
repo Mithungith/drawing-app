@@ -13,8 +13,14 @@ body {
   overflow-x: hidden;
 }
 
+.drawAndTool {
+  border: 1px solid #7f27ff;
+}
+
 canvas {
-  border: 1px solid #000;
+  /* border: 1px solid #7f27ff; */
+  border-bottom: none;
+  cursor: crosshair;
 }
 
 .drawTextBox {
@@ -24,8 +30,9 @@ canvas {
   /* justify-content: stretch; */
   gap: 10px;
   padding: 10px 10px;
-  background: #9f70fd;
-  /* border: 1px solid rebeccapurple; */
+  background: #9f70fda1;
+  /* border: 1px solid #7f27ff;
+  border-top: none; */
 }
 
 .drawTextBox > * {
@@ -41,11 +48,28 @@ canvas {
   color: #fff;
   font-weight: 600;
   font-size: 25px;
-  border-radius: 5px;
+  cursor: pointer;
+}
+
+.drawTextBox > *:active {
+  background-color: chartreuse;
 }
 
 .clearCanva {
   margin-left: auto;
+}
+
+.downloadBtnDiv button {
+  padding: 15px 36px;
+  color: #fff;
+  background-color: #7f27ff;
+  box-shadow: 0 0 3px grey;
+  border: none;
+  outline: none;
+  width: 100%;
+}
+.downloadBtnDiv {
+  margin-top: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -53,6 +77,6 @@ canvas {
     width: 95vw;
   }
   canvas {
-    width: 95vw;
+    width: 85vw;
   }
 }
